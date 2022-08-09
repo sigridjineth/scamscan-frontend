@@ -35,6 +35,7 @@ specifiers:
   prettier: ^2.6.2
   react: 18.1.0
   react-dom: 18.1.0
+  react-hook-form: ^7.34.0
   stylelint: ^14.8.5
   stylelint-config-prettier: ^9.0.3
   stylelint-config-standard: ^25.0.0
@@ -51,6 +52,7 @@ dependencies:
   next: 12.1.6_td47doa7v53j5lryo7z7ezthbi
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
+  react-hook-form: 7.34.0_react@18.1.0
 
 devDependencies:
   '@babel/core': 7.0.0
@@ -3440,6 +3442,15 @@ packages:
       loose-envify: 1.4.0
       react: 18.1.0
       scheduler: 0.22.0
+
+  /react-hook-form/7.34.0_react@18.1.0:
+    resolution: {integrity: sha512-s0/TJ09NVlEk2JPp3yit1WnMuPNBXFmUKEQPulgDi9pYBw/ZmmAFHe6AXWq73Y+kp8ye4OcMf0Jv+i/qLPektg==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.1.0
+    dev: false
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
