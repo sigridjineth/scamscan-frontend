@@ -14,5 +14,11 @@ module.exports = {
     rtl: false,
     prefix: '',
     darkTheme: 'light',
+
+    themes: [
+      {
+        mytheme: { primary: '#ffffff' },
+      },
+    ],
   },
 };
