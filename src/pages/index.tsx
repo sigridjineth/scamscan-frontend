@@ -28,7 +28,7 @@ const Feed: NextPage = () => {
         type="button"
         id="metamask"
       >
-        Connect Metamask Wallets
+        Connect Metamask Walletsssss
       </button>
     </Styled.Page>
   );
