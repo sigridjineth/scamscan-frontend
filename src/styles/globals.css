@@ -24,3 +24,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: 'Syne';
+  src: local('Syne Extra Bold'), local('Syne-Extra-Bold'),
+    url('../assets/fonts/Syne-ExtraBold.woff2') format('woff2'),
+    url('../assets/fonts/Syne-ExtraBold.woff') format('woff'),
+    url('../assets/fonts/Syne-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}

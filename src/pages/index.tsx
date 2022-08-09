@@ -38,6 +38,9 @@ export default Feed;
 
 const Styled = {
   Page: styled.div`
+    h1 {
+      font-family: 'Syne';
+    }
     width: 100vw;
     & > * {
       width: 100%;
