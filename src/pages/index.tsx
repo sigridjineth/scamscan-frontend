@@ -1,17 +1,23 @@
 import styled from '@emotion/styled';
+import Title from '@src/assets/title.svg';
+import Button from '@src/components/common/Button';
+import Navbar from '@src/components/common/Navbar';
 import { connectMetamask } from '@src/utils/connectWallet';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Navbar from '@src/components/common/Navbar';
-import Title from '@src/assets/title.svg';
-import Button from '@src/components/common/Button';
+import { useRouter } from 'next/router';
 
-const Feed: NextPage = () => {
+const Home: NextPage = () => {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push('/mint');
+  };
+
   return (
     <Styled.Page>
       <Head>
         <title>Scam Scan</title>
-        <meta name="description" content="Scan Scab" />
+        <meta name="description" content="Scam Scan" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
@@ -24,14 +30,14 @@ const Feed: NextPage = () => {
           Protect your precious assets.
         </p>
         <div className="m-auto  mb-12">
-          <Button>Mint</Button>
+          <Button onClick={handleClick}>Mint</Button>
         </div>
       </div>
     </Styled.Page>
   );
 };
 
-export default Feed;
+export default Home;
 
 const Styled = {
   Page: styled.div`
