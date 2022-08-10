@@ -2,30 +2,35 @@ import { connectMetamask } from '@src/utils/connectWallet';
 import React, { useEffect, useState } from 'react';
 import Logo from '@src/assets/logo.svg';
 import { useRouter } from 'next/router';
+import { checkWalletConnected } from '@src/utils/checkWalletConnected';
+import Modal from '@src/components/common/Modal';
 
 function Navbar() {
   const router = useRouter();
   const [ownerAddress, setOwnerAddress] = useState<string | undefined | null>('');
 
   useEffect(() => {
-    setOwnerAddress(localStorage.getItem('ownerAddress'));
+    getAccounts();
   }, [ownerAddress]);
 
   const handleClick = () => {
     router.push('/');
   };
 
-  const ownerAddressShort = ownerAddress?.substring(0, 5);
-  const ownerAddressShort2 = ownerAddress?.substring(ownerAddress.length - 5, ownerAddress.length);
+  const ownerAddressShortFront = ownerAddress?.substring(0, 5);
+  const ownerAddressShortBack = ownerAddress?.substring(
+    ownerAddress.length - 5,
+    ownerAddress.length,
+  );
 
-  const handleWalletClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    switch (e.currentTarget.id) {
-      case 'metamask':
-        console.log(await connectMetamask());
-        break;
-      default:
-        break;
-    }
+  const getAccounts = async () => {
+    const metamaskAccounts = await checkWalletConnected();
+    setOwnerAddress(metamaskAccounts);
+  };
+
+  const handleWalletClick = async () => {
+    const metamaskAccounts = await connectMetamask();
+    setOwnerAddress(metamaskAccounts);
   };
 
   const menus = [
@@ -35,7 +40,7 @@ function Navbar() {
   ];
 
   return (
-    <div className="navbar p-12 fixed">
+    <div className="navbar p-12 fixed z-10">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl" onClick={() => handleClick()}>
           <Logo />
@@ -50,48 +55,18 @@ function Navbar() {
       </ul>
 
       {ownerAddress ? (
-        <div className="btn bg-transparent text-white text-xl font-black">
-          {ownerAddressShort}...{ownerAddressShort2}
+        <div className="btn font-black text-xl text-white ">
+          {ownerAddressShortFront}...{ownerAddressShortBack}
         </div>
       ) : (
-        <div className="flex-none">
-          <label
-            htmlFor="my-modal-4 "
-            className="btn modal-button bg-transparent text-white text-xl font-black"
-          >
-            Connect Wallet
-          </label>
-
-          <input type="checkbox" id="my-modal-4" className="modal-toggle" />
-
-          <label htmlFor="my-modal-4" className="modal cursor-pointer">
-            <label className="modal-box relative" htmlFor="">
-              <h3 className="font-bold text-lg text-center">Connect Wallet</h3>
-              <p className="py-4 text-center">Choose wallet to connect to the blockchain.</p>
-              <div className="grid gap-4">
-                <button
-                  className="btn btn-block"
-                  onClick={handleWalletClick}
-                  type="button"
-                  id="metamask"
-                >
-                  Metamask Wallet
-                </button>
-
-                <button
-                  className="btn btn-block "
-                  onClick={handleWalletClick}
-                  type="button"
-                  id="keplr"
-                >
-                  Keplr Wallet
-                </button>
-              </div>
-            </label>
-          </label>
-
-          {/* <TestEvmos ownerAddress={ownerAddress} /> */}
-        </div>
+        <Modal
+          modalId="connectWallet"
+          _onClick={handleWalletClick}
+          btnText="Connect Wallet"
+          modalTitle="Connect Wallet"
+          modalContent="Please connect your wallet to continue"
+          modalBtn="MetaMask"
+        />
       )}
     </div>
   );

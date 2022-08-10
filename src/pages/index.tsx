@@ -30,7 +30,7 @@ const Home: NextPage = () => {
           Protect your precious assets.
         </p>
         <div className="m-auto  mb-12">
-          <Button onClick={handleClick}>Mint</Button>
+          <Button _onClick={() => router.push('/mint')}>Mint</Button>
         </div>
       </div>
     </Styled.Page>
