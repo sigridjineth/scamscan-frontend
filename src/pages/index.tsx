@@ -14,14 +14,14 @@ const Home: NextPage = () => {
   };
 
   return (
-    <Styled.Page>
+    <Styled.Page className="bg-[url('../assets/background/main.png')] bg-cover bg-bottom">
       <Head>
         <title>Scam Scan</title>
         <meta name="description" content="Scam Scan" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <div className="text-center text-white w-fit m-auto h-screen grid content-center bg-[url('../assets/background/main.png')] bg-cover bg-bottom	">
+      <div className="text-center text-white w-fit m-auto h-screen grid content-center">
         <div className="w-fit m-auto">
           <Title />
         </div>
