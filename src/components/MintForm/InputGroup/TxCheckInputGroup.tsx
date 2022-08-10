@@ -1,17 +1,21 @@
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import CheckCircle from '@src/assets/icon/check_circle.svg';
-import XCircle from '@src/assets/icon/x_circle.svg';
 import { body1Regular, body2Bold, body3Regular } from '@src/styles';
 import { checkTxValidation } from '@src/utils/checkTx';
-import React from 'react';
 import { useFormContext } from 'react-hook-form';
+import StatusChecker from '../StatusChecker';
 
 interface TxCheckFormInput {
   targetAddress: string;
   transactionId: string;
 }
 
+interface Status {
+  isPadding: boolean;
+}
+
 function TxCheckInputGroup() {
+  const [isPadding, setIsPadding] = useState(false);
   const {
     register,
     setError,
@@ -23,6 +27,7 @@ function TxCheckInputGroup() {
   const transactionId = register('transactionId');
 
   const handleClick = async () => {
+    setIsPadding(true);
     setError('targetAddress', {
       type: 'manual',
       message: 'Loading',
@@ -51,12 +56,10 @@ function TxCheckInputGroup() {
   };
 
   return (
-    <StRoot>
+    <StRoot isPadding={isPadding}>
       <label htmlFor="targetAddress">
         Target Address
-        {errors?.targetAddress?.message === 'Loading' && <div>로딩중</div>}
-        {errors?.targetAddress?.message === 'Failed' && <XCircle />}
-        {errors?.targetAddress?.message === 'Success' && <CheckCircle />}
+        <StatusChecker status={errors?.targetAddress?.message} />
       </label>
       <input
         type="text"
@@ -65,17 +68,16 @@ function TxCheckInputGroup() {
         {...register('targetAddress')}
         onChange={(e) => {
           targetAddress.onChange(e);
+          setIsPadding(false);
           setError('targetAddress', {
             type: 'manual',
-            message: 'Error Reset',
+            message: 'Reset',
           });
         }}
       />
       <label htmlFor="transactionId">
         Transaction id
-        {errors?.transactionId?.message === 'Loading' && <div>로딩중</div>}
-        {errors?.transactionId?.message === 'Failed' && <XCircle />}
-        {errors?.transactionId?.message === 'Success' && <CheckCircle />}
+        <StatusChecker status={errors?.transactionId?.message} />
       </label>
       <input
         type="text"
@@ -84,9 +86,10 @@ function TxCheckInputGroup() {
         {...register('transactionId')}
         onChange={(e) => {
           transactionId.onChange(e);
+          setIsPadding(false);
           setError('transactionId', {
             type: 'manual',
-            message: 'Error Reset',
+            message: 'Reset',
           });
         }}
       />
@@ -99,7 +102,7 @@ function TxCheckInputGroup() {
 
 export default TxCheckInputGroup;
 
-const StRoot = styled.section`
+const StRoot = styled.section<Status>`
   display: flex;
   flex-direction: column;
   width: 560px;
@@ -111,7 +114,7 @@ const StRoot = styled.section`
   & input {
     background: #181818;
     border-radius: 10px;
-    ${body1Regular}
+    padding-right: ${({ isPadding }) => isPadding && '42px;'} ${body1Regular};
   }
   & label {
     ${body3Regular}
