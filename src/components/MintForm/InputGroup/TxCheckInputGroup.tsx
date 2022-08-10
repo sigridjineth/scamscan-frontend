@@ -2,8 +2,9 @@ import styled from '@emotion/styled';
 import CheckCircle from '@src/assets/icon/check_circle.svg';
 import XCircle from '@src/assets/icon/x_circle.svg';
 import { body1Regular, body2Bold, body3Regular } from '@src/styles';
+import { checkTxValidation } from '@src/utils/checkTx';
 import React from 'react';
-import { useForm, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 interface TxCheckFormInput {
   targetAddress: string;
@@ -11,39 +12,41 @@ interface TxCheckFormInput {
 }
 
 function TxCheckInputGroup() {
-  const { register } = useFormContext();
   const {
-    handleSubmit,
+    register,
     setError,
+    getValues,
     formState: { errors },
-  } = useForm<TxCheckFormInput>();
+  } = useFormContext<TxCheckFormInput>();
 
   const targetAddress = register('targetAddress');
   const transactionId = register('transactionId');
 
-  React.useEffect(() => {
-    console.log('>>>errors', errors);
-  }, [errors.targetAddress, errors.transactionId]);
-
-  const handleClick = () => {
-    console.log('>>이제 검증로직을 시작할거야.');
-    /*
-          setError('targetAddress', {
-            type: 'manual',
-            message: 'Error message',
-          });
-          이런 식으로 에러 세팅
-    */
-    /*
-   
-   */
+  const handleClick = async () => {
     setError('targetAddress', {
       type: 'manual',
-      message: 'Failed',
+      message: 'Loading',
     });
     setError('transactionId', {
       type: 'manual',
-      message: 'Failed',
+      message: 'Loading',
+    });
+    const values = getValues();
+
+    const result = await checkTxValidation({
+      transactionId: values?.transactionId,
+      targetAddress: values?.targetAddress,
+    });
+
+    console.log('>>>result', result);
+
+    setError('targetAddress', {
+      type: 'manual',
+      message: result['targetAddress'],
+    });
+    setError('transactionId', {
+      type: 'manual',
+      message: result['transactionId'],
     });
   };
 
@@ -51,6 +54,7 @@ function TxCheckInputGroup() {
     <StRoot>
       <label htmlFor="targetAddress">
         Target Address
+        {errors?.targetAddress?.message === 'Loading' && <div>로딩중</div>}
         {errors?.targetAddress?.message === 'Failed' && <XCircle />}
         {errors?.targetAddress?.message === 'Success' && <CheckCircle />}
       </label>
@@ -69,6 +73,7 @@ function TxCheckInputGroup() {
       />
       <label htmlFor="transactionId">
         Transaction id
+        {errors?.transactionId?.message === 'Loading' && <div>로딩중</div>}
         {errors?.transactionId?.message === 'Failed' && <XCircle />}
         {errors?.transactionId?.message === 'Success' && <CheckCircle />}
       </label>
