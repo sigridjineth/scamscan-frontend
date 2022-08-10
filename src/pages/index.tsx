@@ -2,16 +2,28 @@ import styled from '@emotion/styled';
 import Title from '@src/assets/title.svg';
 import Button from '@src/components/common/Button';
 import Navbar from '@src/components/common/Navbar';
+import Toast from '@src/components/common/Toast';
 import { connectMetamask } from '@src/utils/connectWallet';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
 const Home: NextPage = () => {
   const router = useRouter();
   const handleClick = () => {
     router.push('/mint');
   };
+  const [isToast, setIsToast] = useState<boolean>();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsToast(true);
+      // setTimeout(() => {
+      //   setIsToast(false);
+      // }, 2000);
+    }, 2000);
+  }, []);
 
   return (
     <Styled.Page className="bg-[url('../assets/background/main.png')] bg-cover bg-bottom">
@@ -21,7 +33,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <div className="text-center text-white w-fit m-auto h-screen grid content-center">
+      {isToast && <Toast _onClick={() => setIsToast(false)} />}
+      <div className="text-center text-white w-fit m-auto h-screen grid content-center bg-[url('../assets/background/main.png')] bg-cover bg-bottom	">
         <div className="w-fit m-auto">
           <Title />
         </div>

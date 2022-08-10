@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from 'react';
 
 interface Button extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: string;
-  _onClick?: () => {};
+  _onClick?: () => void;
   small?: boolean;
 }
 
