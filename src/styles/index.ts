@@ -17,3 +17,9 @@ line-height: 145%;
 text-align: center;
 letter-spacing: 0.001em;
 `;
+
+export const flexColumn = `
+display: flex;
+flex-direction: column;
+align-items: center;
+`;
