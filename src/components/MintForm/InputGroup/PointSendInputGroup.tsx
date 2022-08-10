@@ -11,6 +11,7 @@ export default PointSendInputGroup;
 
 const StRoot = styled.section`
   ${flexColumn}
+  justify-content: center;
   width: 560px;
   height: 660px;
   background: #202020;

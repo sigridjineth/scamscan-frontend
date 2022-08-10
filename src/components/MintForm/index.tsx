@@ -7,7 +7,9 @@ import TxCheckInputGroup from './InputGroup/TxCheckInputGroup';
 
 function MintForm() {
   const methods = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log('>>data', data);
+  };
 
   return (
     <FormProvider {...methods}>
@@ -15,7 +17,7 @@ function MintForm() {
         <TxCheckInputGroup />
         <PointSendInputGroup />
 
-        <Button>Send Reputation</Button>
+        <Button type="submit">Send Reputation</Button>
       </form>
     </FormProvider>
   );
