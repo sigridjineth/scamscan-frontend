@@ -7,14 +7,14 @@ interface Button extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button(props: Button) {
-  const { children, _onClick, small } = props;
+  const { children, _onClick, small, ...prop } = props;
 
   if (small) {
     return (
       <button
         onClick={_onClick}
         className="btn-primary text-black p-4 text-2xl px-28 py-5 rounded-lg w-fit font-black"
-        type="button"
+        {...prop}
       >
         {children}
       </button>
@@ -25,7 +25,7 @@ function Button(props: Button) {
     <button
       onClick={_onClick}
       className="btn-primary text-black p-4 text-3xl px-32 py-5 rounded-lg w-fit font-black"
-      type="button"
+      {...prop}
     >
       {children}
     </button>
