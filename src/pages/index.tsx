@@ -5,8 +5,11 @@ import Head from 'next/head';
 import Navbar from '@src/components/common/Navbar';
 import Title from '@src/assets/title.svg';
 import Button from '@src/components/common/Button';
+import { useRouter } from 'next/router';
 
 const Feed: NextPage = () => {
+  const router = useRouter();
+
   return (
     <Styled.Page>
       <Head>
@@ -24,7 +27,7 @@ const Feed: NextPage = () => {
           Protect your precious assets.
         </p>
         <div className="m-auto  mb-12">
-          <Button>Mint</Button>
+          <Button _onClick={() => router.push('/mint')}>Mint</Button>
         </div>
       </div>
     </Styled.Page>
