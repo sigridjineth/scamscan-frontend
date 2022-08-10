@@ -1,6 +1,6 @@
 interface Button {
   children?: string;
-  _onClick?: () => {};
+  _onClick?: () => void;
   small?: boolean;
 }
 
