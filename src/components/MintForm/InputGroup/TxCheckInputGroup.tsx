@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { body1Regular, body2Bold, body3Regular } from '@src/styles';
 import { checkTxValidation } from '@src/utils/checkTx';
+import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import StatusChecker from '../StatusChecker';
 
 interface TxCheckFormInput {
