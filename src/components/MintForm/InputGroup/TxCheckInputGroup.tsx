@@ -39,6 +39,8 @@ function TxCheckInputGroup() {
     });
     const values = getValues();
 
+    console.log('>>values', values);
+
     const result = await checkTxValidation({
       transactionId: values?.transactionId,
       targetAddress: values?.targetAddress,

@@ -7,7 +7,11 @@ import TxCheckInputGroup from './InputGroup/TxCheckInputGroup';
 
 function MintForm() {
   const methods = useForm();
+  // const { getValues } = useFormContext();
   const onSubmit = (data) => {
+    const value = methods.getValues();
+
+    console.log('>>value', value);
     console.log('>>data', data);
   };
 

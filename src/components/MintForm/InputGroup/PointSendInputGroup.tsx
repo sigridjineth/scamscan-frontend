@@ -1,7 +1,14 @@
 // PointSendInputGroup
 import styled from '@emotion/styled';
 import ScoreBar from '@src/components/common/ScoreBar';
-import { body1Regular, body2Bold, body3Regular, flexColumn } from '@src/styles';
+import {
+  body1Regular,
+  body2Bold,
+  body2Regular,
+  body3Regular,
+  flexColumn,
+  h1Regular,
+} from '@src/styles';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -16,7 +23,45 @@ function PointSendInputGroup() {
 
   return (
     <StRoot>
+      <StAddress>0xa50...Ee9CB’s Score</StAddress>
+      <StScore>+41</StScore>
       <ScoreBar score={+41} />
+      <StCheckBoxGroup>
+        <label
+          htmlFor="radio-1"
+          className="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"
+        >
+          <input type="radio" value="good" className="radio" {...register('reputation')} />
+          Send Good Reputation
+        </label>
+        <label
+          htmlFor="radio-1"
+          className="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"
+        >
+          <input className="radio" type="radio" value="bad" {...register('reputation')} />
+          Send Bad Reputation
+        </label>
+      </StCheckBoxGroup>
+      <label htmlFor="point">
+        Point
+        <input
+          type="number"
+          placeholder="0-100"
+          className="input w-full h-[54px] mt-[11px] mb-[40px]"
+          {...register('point')}
+        />
+      </label>
+      <label htmlFor="reason">
+        Reason
+        <input
+          type="select"
+          placeholder="Selected the Reason"
+          className="input w-full h-[54px] mt-[11px] mb-[40px]"
+          {...register('reason')}
+        />
+      </label>
+      <label htmlFor="mintCost">Mint Cost</label>
+      <div></div>
     </StRoot>
   );
 }
@@ -40,6 +85,7 @@ const StRoot = styled.section`
   & label {
     ${body3Regular}
     position: relative;
+    margin-top: 40px;
     & svg {
       position: absolute;
       top: 45px;
@@ -54,5 +100,36 @@ const StRoot = styled.section`
     border-radius: 10px;
     ${body2Bold}
     margin-top: 40px;
+  }
+`;
+
+const StAddress = styled.p`
+  ${body3Regular}
+`;
+
+const StScore = styled.h2`
+  ${h1Regular}
+  margin-top: 11px;
+  margin-bottom: 20px;
+`;
+
+const StCheckBoxGroup = styled.div`
+  height: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 48px;
+  margin-bottom: 48px;
+  & label {
+    ${body2Regular}
+    display: flex;
+    align-items: center;
+    height: 20px;
+    & input {
+      margin-right: 8px;
+      height: 20px;
+      width: 20px;
+      background: transparent !important;
+    }
   }
 `;

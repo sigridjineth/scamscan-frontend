@@ -3,6 +3,7 @@
 2. 해당 Tx가 중복된 애가 없는지 
 */
 
+import { getMintContract } from '@src/lib/contract';
 import { providers } from 'ethers';
 
 // from / to 추출
@@ -32,13 +33,14 @@ export const checkTxValidation = async ({
 }: checkTxValidationParams): Promise<ReturnValue> => {
   try {
     const txReceipt = await getTxReceipt({ transactionId });
-    const ownerAddress = localStorage.getItem('ownerAddress');
+    const ownerAddress = localStorage.getItem('ownerAddress')?.toLowerCase();
 
     console.log('>>ownerAddress', ownerAddress);
     console.log('>>tx', txReceipt);
+    console.log('>>targetAddress', targetAddress);
     if (
-      targetAddress !== txReceipt?.from.toLowerCase() &&
-      targetAddress !== txReceipt?.to.toLowerCase()
+      targetAddress?.toLowerCase() !== txReceipt?.from?.toLowerCase() &&
+      targetAddress?.toLowerCase() !== txReceipt?.to?.toLowerCase()
     ) {
       return {
         targetAddress: 'Failed',
@@ -47,8 +49,8 @@ export const checkTxValidation = async ({
     }
 
     if (
-      ownerAddress !== txReceipt?.from.toLowerCase() &&
-      ownerAddress !== txReceipt?.to.toLowerCase()
+      ownerAddress !== txReceipt?.from?.toLowerCase() &&
+      ownerAddress !== txReceipt?.to?.toLowerCase()
     ) {
       return {
         targetAddress: 'Failed',
@@ -57,6 +59,16 @@ export const checkTxValidation = async ({
     }
 
     // @TODO 만약 두가지 다 있다면 컨트랙트로 보내서 중복 체크
+    const mintContract = await getMintContract();
+
+    const isUsed = await mintContract.isUsedTransactionHash(transactionId);
+
+    if (isUsed) {
+      return {
+        targetAddress: 'Failed',
+        transactionId: 'Failed',
+      };
+    }
 
     return {
       targetAddress: 'Success',
