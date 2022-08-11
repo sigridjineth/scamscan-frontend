@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Logo from '@src/assets/logo.svg';
 import Modal from '@src/components/common/Modal';
 import { checkWalletConnected } from '@src/utils/checkWalletConnected';
@@ -40,6 +41,34 @@ function Navbar() {
     { label: 'Check', path: '/check' },
     { label: 'MyPage', path: '/mypage' },
   ];
+  const handleRouting = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const address = typeof window !== undefined && localStorage.getItem('ownerAddress');
+
+    if (!address) {
+      alert('You need to connect metamask!');
+    }
+
+    switch (e.currentTarget.id) {
+      case 'Mint':
+        router.push({
+          pathname: '/mint',
+        });
+        break;
+      case 'Check':
+        router.push({
+          pathname: '/check',
+        });
+        break;
+      case 'MyPage':
+        router.push({
+          pathname: '/check/confirm',
+          query: { checkAddress: address },
+        });
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div className="navbar p-12 fixed z-10">
@@ -51,7 +80,9 @@ function Navbar() {
       <ul className="menu menu-horizontal p-0 text-white text-2xl mr-2">
         {menus.map((menu, key) => (
           <li className="mx-1" key={`menu.label${key}`}>
-            <a href={`${menu.path}`}>{menu.label}</a>
+            <a onClick={handleRouting} id={menu.label}>
+              {menu.label}
+            </a>
           </li>
         ))}
       </ul>
