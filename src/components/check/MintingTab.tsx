@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 
-import SBT from './SBT';
+import { SBT, SBTType } from './SBT';
 import Summary from './Summary';
 
-interface ReputationTabProps {
-  address: string;
+interface MintingTabProps {
+  tokens: Array<SBTType>;
+  burntAsset: number;
 }
 
 const SBTContainer = styled.section`
@@ -14,16 +15,8 @@ const SBTContainer = styled.section`
   gap: 40px;
   margin-top: 48px;
   margin-left: calc(50% - 560px);
+  margin-bottom: 104px;
 `;
-
-interface SBTType {
-  score: number;
-  reason: string;
-  address: string;
-  addressTitle: string;
-  date: string;
-  trasactionID: string;
-}
 
 const NoHistories = styled.div`
   font-family: 'Poppins';
@@ -38,20 +31,18 @@ const NoHistories = styled.div`
   margin-bottom: 200px;
 `;
 
-function MintingTab({ address }: ReputationTabProps) {
-  const [SBTList, setSBTList] = useState<Array<SBTType>>([]);
-
+function MintingTab({ tokens, burntAsset }: MintingTabProps) {
   return (
     <>
       <Summary
         title1="Total Minted SBT"
-        number1={500}
+        number1={tokens ? tokens.length : 0}
         title2="Total Burned Matic"
-        number2={150000}
+        number2={burntAsset}
       />
       <SBTContainer>
-        {SBTList?.length > 0 ? (
-          SBTList?.map((item) => {
+        {tokens?.length > 0 ? (
+          tokens?.map((item: SBTType) => {
             return (
               <SBT
                 key={item.address}
@@ -60,7 +51,7 @@ function MintingTab({ address }: ReputationTabProps) {
                 address={item.address}
                 addressTitle="Receiver"
                 date={item.date}
-                trasactionID={item.trasactionID}
+                transactionID={item.transactionID}
               />
             );
           })

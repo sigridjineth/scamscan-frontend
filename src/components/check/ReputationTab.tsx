@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 
-import SBT from './SBT';
+import { SBT, SBTType } from './SBT';
 import Summary from './Summary';
 
 interface ReputationTabProps {
-  address: string;
+  tokens: Array<SBTType>;
+  numOfMinters: number;
 }
 
 const SBTContainer = styled.section`
@@ -14,16 +15,10 @@ const SBTContainer = styled.section`
   gap: 40px;
   margin-top: 48px;
   margin-left: calc(50% - 560px);
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 104px;
 `;
-
-interface SBTType {
-  score: number;
-  reason: string;
-  address: string;
-  addressTitle: string;
-  date: string;
-  trasactionID: string;
-}
 
 const NoHistories = styled.div`
   font-family: 'Poppins';
@@ -38,24 +33,27 @@ const NoHistories = styled.div`
   margin-bottom: 200px;
 `;
 
-function ReputationTab({ address }: ReputationTabProps) {
-  const [SBTList, setSBTList] = useState<Array<SBTType>>([]);
-
+function ReputationTab({ tokens, numOfMinters }: ReputationTabProps) {
   return (
     <>
-      <Summary title1="Total Holding SBT" number1={500} title2="Total Minters" number2={48} />
+      <Summary
+        title1="Total Holding SBT"
+        number1={tokens ? tokens.length : 0}
+        title2="Total Minters"
+        number2={numOfMinters}
+      />
       <SBTContainer>
-        {SBTList?.length > 0 ? (
-          SBTList?.map((item) => {
+        {tokens?.length > 0 ? (
+          tokens?.map((item) => {
             return (
               <SBT
-                key={item.address}
+                key={item.transactionID}
                 score={item.score}
                 reason={item.reason}
                 address={item.address}
                 addressTitle="Minter"
                 date={item.date}
-                trasactionID={item.trasactionID}
+                transactionID={item.transactionID}
               />
             );
           })
