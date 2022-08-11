@@ -74,6 +74,7 @@ function MintForm({ setIsToast, setIsSubmit }: MintFormProps) {
       localStorage.setItem('reputation', value.reputation);
       localStorage.setItem('targetAddress', value.targetAddress);
       localStorage.setItem('transactionId', value.transactionId);
+      localStorage.setItem('matic', burnedMatic);
     }
   };
 

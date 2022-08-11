@@ -42,6 +42,7 @@ const StRoot = styled.section`
   width: 640px;
   height: 300px;
   padding: 48px;
+  z-index: 30;
 
   background: #202020;
   border-radius: 20px;
