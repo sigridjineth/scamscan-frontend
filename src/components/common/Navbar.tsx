@@ -54,7 +54,7 @@ function Navbar() {
         ))}
       </ul>
 
-      {ownerAddress ? (
+      {!ownerAddress ? (
         <div className="btn font-black text-xl text-white ">
           {ownerAddressShortFront}...{ownerAddressShortBack}
         </div>

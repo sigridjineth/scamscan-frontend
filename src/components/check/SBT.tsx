@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
-interface SBTVisualizationProps {
+export interface SBTType {
   score: number;
   reason: string;
   address: string;
   addressTitle: string;
   date: string;
-  trasactionID: string;
+  transactionID: string;
 }
 
 const StyledRoot = styled.section`
@@ -38,7 +38,7 @@ const Title = styled.div`
   margin-top: 20px;
 `;
 
-const Content = styled.div`
+const Content = styled.a`
   font-family: 'Syne';
   font-style: normal;
   font-weight: 400;
@@ -56,7 +56,7 @@ const ProfileImage = styled.div`
   background-size: cover;
 `;
 
-function SBT(props: SBTVisualizationProps) {
+export function SBT(props: SBTType) {
   return (
     <StyledRoot>
       <Score> {props.score} </Score>
@@ -74,9 +74,13 @@ function SBT(props: SBTVisualizationProps) {
       <Content> {props.date} </Content>
 
       <Title> TxId </Title>
-      <Content className='underline'> {props.trasactionID} </Content>
+      <Content
+        className="underline text-[12px]"
+        href={'https://mumbai.polygonscan.com/tx/' + props.transactionID}
+      >
+        {' '}
+        {props.transactionID}{' '}
+      </Content>
     </StyledRoot>
   );
 }
-
-export default SBT;

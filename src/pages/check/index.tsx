@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Intro from '@src/components/common/Intro';
 import { INTRO_INFO } from '@src/constants';
 import { useRouter } from 'next/router';
+import Navbar from '@src/components/common/Navbar';
 import React, { useState } from 'react';
 
 const StyledRoot = styled.section`
@@ -66,18 +67,24 @@ const StyledSubmitButton = styled.button`
   font-weight: 800;
   font-size: 16px;
   line-height: 19px;
+  color: black;
 `;
 
 function Check() {
   const [address, setAddress] = useState('');
   const router = useRouter();
   const handleClick = () => {
-    if (address) router.push(`/check/${address}`);
+    if (address)
+      router.push({
+        pathname: '/check/confirm',
+        query: { checkAddress: address },
+      });
     else alert('Fill in a address to check reputation.');
   };
 
   return (
     <StyledRoot>
+      <Navbar />
       <div
         css={css`
           height: 160px;

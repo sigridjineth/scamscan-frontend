@@ -1,4 +1,4 @@
-export const ContractAbi = [
+exports.ContractAbi = [
   {
     inputs: [
       {
@@ -209,6 +209,11 @@ export const ContractAbi = [
       {
         components: [
           {
+            internalType: 'address',
+            name: 'from',
+            type: 'address',
+          },
+          {
             internalType: 'int256',
             name: 'score',
             type: 'int256',
@@ -278,6 +283,11 @@ export const ContractAbi = [
     outputs: [
       {
         components: [
+          {
+            internalType: 'address',
+            name: 'from',
+            type: 'address',
+          },
           {
             internalType: 'int256',
             name: 'score',
@@ -363,6 +373,19 @@ export const ContractAbi = [
         internalType: 'string',
         name: '',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
