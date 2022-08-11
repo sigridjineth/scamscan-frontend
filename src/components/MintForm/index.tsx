@@ -47,7 +47,7 @@ function MintForm({ setIsToast, setIsSubmit }: MintFormProps) {
     return () => subscription.unsubscribe();
   }, [methods, methods.watch]);
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     const value = methods.getValues();
     const allDataArray = Object.values(value);
     let isEmpty = false;
@@ -74,7 +74,7 @@ function MintForm({ setIsToast, setIsSubmit }: MintFormProps) {
       localStorage.setItem('reputation', value.reputation);
       localStorage.setItem('targetAddress', value.targetAddress);
       localStorage.setItem('transactionId', value.transactionId);
-      localStorage.setItem('matic', burnedMatic);
+      localStorage.setItem('matic', burnedMatic.toString());
     }
   };
 

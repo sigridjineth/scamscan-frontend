@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 const StyledRoot = styled.section`
   width: 100%;
@@ -27,7 +27,7 @@ const Title = styled.div`
 `;
 
 export function CheckHeader() {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <StyledRoot>

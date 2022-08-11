@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Intro from '@src/components/common/Intro';
+import Navbar from '@src/components/common/Navbar';
 import { INTRO_INFO } from '@src/constants';
 import { useRouter } from 'next/router';
-import Navbar from '@src/components/common/Navbar';
 import React, { useState } from 'react';
 
 const StyledRoot = styled.section`

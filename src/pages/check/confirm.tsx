@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { CheckHeader } from '@src/components/check/CheckHeader';
 import MintingTab from '@src/components/check/MintingTab';
 import Profile from '@src/components/check/Profile';
 import ReputationTab from '@src/components/check/ReputationTab';
@@ -8,7 +9,6 @@ import { getCheckContract } from '@src/lib/contract';
 import { BigNumber } from 'ethers';
 import { useRouter } from 'next/router';
 import PreviousMap from 'postcss/lib/previous-map';
-import { CheckHeader } from '@src/components/check/CheckHeader';
 import { useEffect, useState } from 'react';
 
 const StyledRoot = styled.section`
@@ -85,7 +85,7 @@ function Confirm() {
     return month + '/' + day + '/' + year;
   };
 
-  const parseReceivedToken = (token) => {
+  const parseReceivedToken = (token: any) => {
     const score = token.score.toNumber();
     const reason = token.reportTypeCode;
     const address = token.from;
@@ -103,8 +103,15 @@ function Confirm() {
     };
   };
 
-  const parseReceivedTokensAtOnce = (tokenArray) => {
-    const resultArray = [];
+  const parseReceivedTokensAtOnce = (tokenArray: any[]) => {
+    const resultArray: {
+      score: any;
+      reason: any;
+      address: any;
+      addressTitle: string;
+      date: string;
+      transactionID: any;
+    }[] = [];
 
     tokenArray.map((token) => {
       resultArray.push(parseReceivedToken(token));
@@ -113,7 +120,7 @@ function Confirm() {
     return resultArray;
   };
 
-  const parseSentToken = (token) => {
+  const parseSentToken = (token: any) => {
     const score = token.score.toNumber();
     const reason = token.reportTypeCode;
     const address = token.from;
@@ -131,8 +138,15 @@ function Confirm() {
     };
   };
 
-  const parseSentTokensAtOnce = (tokenArray) => {
-    const resultArray = [];
+  const parseSentTokensAtOnce = (tokenArray: any[]) => {
+    const resultArray: {
+      score: any;
+      reason: any;
+      address: any;
+      addressTitle: string;
+      date: string;
+      transactionID: any;
+    }[] = [];
 
     tokenArray.map((token) => {
       resultArray.push(parseSentToken(token));
@@ -145,7 +159,7 @@ function Confirm() {
     const contract = await getCheckContract();
     const receivedTokensPromise = contract.receivedTokensOf(router?.query?.checkAddress);
 
-    receivedTokensPromise.then((result) => {
+    receivedTokensPromise.then((result: any) => {
       const receivedTokens = result;
 
       setNumOfMinters(getNumOfMinters(receivedTokens));
@@ -155,7 +169,7 @@ function Confirm() {
     });
     const sentTokensPromise = contract.sentTokensOf(router?.query?.checkAddress);
 
-    sentTokensPromise.then((result) => {
+    sentTokensPromise.then((result: any) => {
       const sentTokens = result;
 
       setBurntAsset(getBurntAsset(sentTokens));
@@ -166,7 +180,7 @@ function Confirm() {
     });
   };
 
-  const getBurntAsset = (tokens) => {
+  const getBurntAsset = (tokens: any[]) => {
     let result = 0;
 
     tokens.map((tok) => {
@@ -176,8 +190,8 @@ function Confirm() {
     return result;
   };
 
-  const getNumOfMinters = (tokens) => {
-    let minterSet = new Set();
+  const getNumOfMinters = (tokens: any[]) => {
+    const minterSet = new Set();
 
     tokens.map((tok) => {
       minterSet.add(tok.from);

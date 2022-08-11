@@ -1,4 +1,4 @@
-exports.ContractAbi = [
+export const ContractAbi = [
   {
     inputs: [
       {

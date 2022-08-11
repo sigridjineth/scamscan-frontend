@@ -69,7 +69,7 @@ function PointSendInputGroup({
           {...register('point')}
           onChange={(e) => {
             isSuccess && register('point').onChange(e);
-            setAverageScore(averageNumFromLocal + Number(getValues()?.point));
+            setAverageScore((averageNumFromLocal as number) + Number(getValues()?.point));
           }}
         />
       </label>

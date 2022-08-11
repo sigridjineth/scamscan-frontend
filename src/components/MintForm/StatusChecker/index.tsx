@@ -1,6 +1,6 @@
-import React from 'react';
 import CheckCircle from '@src/assets/icon/check_circle.svg';
 import XCircle from '@src/assets/icon/x_circle.svg';
+import React from 'react';
 
 interface StatusCheckerProps {
   status: string | undefined;

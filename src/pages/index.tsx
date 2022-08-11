@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 import styled from '@emotion/styled';
 import Title from '@src/assets/title.svg';
 import Button from '@src/components/common/Button';
