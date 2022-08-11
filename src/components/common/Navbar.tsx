@@ -1,9 +1,9 @@
-import { connectMetamask } from '@src/utils/connectWallet';
-import React, { useEffect, useState } from 'react';
 import Logo from '@src/assets/logo.svg';
-import { useRouter } from 'next/router';
-import { checkWalletConnected } from '@src/utils/checkWalletConnected';
 import Modal from '@src/components/common/Modal';
+import { checkWalletConnected } from '@src/utils/checkWalletConnected';
+import { connectMetamask } from '@src/utils/connectWallet';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
 function Navbar() {
   const router = useRouter();
@@ -25,11 +25,13 @@ function Navbar() {
 
   const getAccounts = async () => {
     const metamaskAccounts = await checkWalletConnected();
+
     setOwnerAddress(metamaskAccounts);
   };
 
   const handleWalletClick = async () => {
     const metamaskAccounts = await connectMetamask();
+
     setOwnerAddress(metamaskAccounts);
   };
 
@@ -54,7 +56,7 @@ function Navbar() {
         ))}
       </ul>
 
-      {!ownerAddress ? (
+      {ownerAddress ? (
         <div className="btn font-black text-xl text-white ">
           {ownerAddressShortFront}...{ownerAddressShortBack}
         </div>
