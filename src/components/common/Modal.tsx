@@ -1,19 +1,21 @@
 import Button from '@src/components/common/Button';
 interface Modal {
   children?: string;
-  _onClick?: () => {};
+  _onClick?: () => void;
   btnText?: string;
   modalTitle?: string;
   modalContent?: string;
   modalBtn?: string;
   modalId: string;
+  [key: string]: any;
 }
 
 function Modal(props: Modal) {
-  const { children, _onClick, btnText, modalTitle, modalContent, modalBtn, modalId } = props;
+  const { children, _onClick, btnText, modalTitle, modalContent, modalBtn, modalId, ...prop } =
+    props;
 
   return (
-    <div className="flex-none">
+    <div className="flex-none" {...prop}>
       <label htmlFor={modalId} className="btn modal-button font-black text-white text-xl">
         {btnText}
       </label>

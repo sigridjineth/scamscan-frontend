@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styled from '@emotion/styled';
 import Intro from '@src/components/common/Intro';
+import Modal from '@src/components/common/Modal';
 import Navbar from '@src/components/common/Navbar';
 import Toast from '@src/components/common/Toast';
 import MintForm from '@src/components/MintForm';
@@ -18,6 +19,15 @@ function mint() {
       <Intro.Title>{INTRO_INFO.MINT.TITLE}</Intro.Title>
       <Intro.Description>{INTRO_INFO.MINT.DESCRIPTION}</Intro.Description>
       <MintForm setIsToast={setIsToast} />
+      <Modal
+        modalId="connectWallet"
+        // _onClick={handleModalClick}
+        btnText="Connect Wallet"
+        modalTitle="Connect Wallet"
+        modalContent="Please connect your wallet to continue"
+        modalBtn="MetaMask"
+        className="Modal__style"
+      />
     </StyledRoot>
   );
 }

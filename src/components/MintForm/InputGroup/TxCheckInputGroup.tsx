@@ -19,8 +19,13 @@ interface Status {
 interface TxCheckInputGroupProps {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   setAverageScore: Dispatch<SetStateAction<number>>;
+  setIsSuccess: Dispatch<SetStateAction<boolean>>;
 }
-function TxCheckInputGroup({ setIsLoading, setAverageScore }: TxCheckInputGroupProps) {
+function TxCheckInputGroup({
+  setIsLoading,
+  setAverageScore,
+  setIsSuccess,
+}: TxCheckInputGroupProps) {
   const {
     register,
     setError,
@@ -70,13 +75,20 @@ function TxCheckInputGroup({ setIsLoading, setAverageScore }: TxCheckInputGroupP
     if (result.targetAddress === 'Success' && result.transactionId === 'Success') {
       const mintContract = await getMintContract();
 
+      setIsSuccess(true);
+
       const allCount = await mintContract.balanceOf(values?.targetAddress);
       const allScore = await mintContract.reputationScoreOf(values?.targetAddress);
 
       if (allCount.toNumber() === 0) {
         setAverageScore(0);
+        localStorage.setItem('averageScore', JSON.stringify(0));
       } else {
         setAverageScore(allScore.toNumber() / allCount.toNumber());
+        localStorage.setItem(
+          'averageScore',
+          JSON.stringify(allScore.toNumber() / allCount.toNumber()),
+        );
       }
     }
   };

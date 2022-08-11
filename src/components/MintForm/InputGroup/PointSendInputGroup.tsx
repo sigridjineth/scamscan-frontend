@@ -9,14 +9,20 @@ import {
   flexColumn,
   h1Regular,
 } from '@src/styles';
-import React from 'react';
+import React, { Dispatch, SetStateAction, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 interface PointSendInputGroupProps {
   averageScore: number;
+  isSuccess: boolean;
+  setAverageScore: Dispatch<SetStateAction<number>>;
 }
 
-function PointSendInputGroup({ averageScore }: PointSendInputGroupProps) {
+function PointSendInputGroup({
+  averageScore,
+  isSuccess,
+  setAverageScore,
+}: PointSendInputGroupProps) {
   const {
     register,
     setError,
@@ -26,12 +32,13 @@ function PointSendInputGroup({ averageScore }: PointSendInputGroupProps) {
   } = useFormContext();
 
   const value = getValues();
+  const averageNumFromLocal = Number(localStorage.getItem('averageScore'));
 
   console.log('>>value', value);
 
   return (
     <StRoot>
-      <StAddress>{value?.targetAddress}’s Score</StAddress>
+      <StAddress>{isSuccess && `${value?.targetAddress}'s`} Score</StAddress>
       <StScore>{averageScore}</StScore>
       <ScoreBar score={averageScore} />
       <StCheckBoxGroup>
@@ -57,6 +64,10 @@ function PointSendInputGroup({ averageScore }: PointSendInputGroupProps) {
           placeholder="0-100"
           className="input w-full h-[54px] mt-[11px] mb-[40px]"
           {...register('point')}
+          onChange={(e) => {
+            isSuccess && register('point').onChange(e);
+            setAverageScore(averageNumFromLocal + Number(getValues()?.point));
+          }}
         />
       </label>
       <label htmlFor="reason">
@@ -85,7 +96,7 @@ const StRoot = styled.section`
   border-radius: 20px;
   margin-top: 20px;
   padding: 48px 48px;
-  input[type='number'] {
+  /* input[type='number'] {
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
     appearance: textfield;
@@ -94,7 +105,7 @@ const StRoot = styled.section`
   input[type='number']::-webkit-inner-spin-button,
   input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
-  }
+  } */
   & input {
     background: #181818;
     border-radius: 10px;
