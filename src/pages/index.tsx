@@ -16,15 +16,6 @@ const Home: NextPage = () => {
   };
   const [isToast, setIsToast] = useState<boolean>();
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsToast(true);
-      // setTimeout(() => {
-      //   setIsToast(false);
-      // }, 2000);
-    }, 2000);
-  }, []);
-
   return (
     <Styled.Page className="bg-[url('../assets/background/main.png')] bg-cover bg-bottom">
       <Head>
@@ -33,7 +24,6 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      {isToast && <Toast _onClick={() => setIsToast(false)} />}
       <div className="text-center text-white w-fit m-auto h-screen grid content-center bg-[url('../assets/background/main.png')] bg-cover bg-bottom	">
         <div className="w-fit m-auto">
           <Title />

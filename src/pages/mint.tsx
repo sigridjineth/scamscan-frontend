@@ -1,18 +1,23 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import styled from '@emotion/styled';
 import Intro from '@src/components/common/Intro';
+import Navbar from '@src/components/common/Navbar';
+import Toast from '@src/components/common/Toast';
 import MintForm from '@src/components/MintForm';
 import { INTRO_INFO } from '@src/constants';
 import { flexColumn } from '@src/styles';
-import React from 'react';
-import Navbar from '@src/components/common/Navbar';
+import React, { useEffect, useState } from 'react';
 
 function mint() {
+  const [isToast, setIsToast] = useState<boolean>(false);
+
   return (
     <StyledRoot>
       <Navbar />
+      {isToast && <Toast _onClick={() => setIsToast(false)} />}
       <Intro.Title>{INTRO_INFO.MINT.TITLE}</Intro.Title>
       <Intro.Description>{INTRO_INFO.MINT.DESCRIPTION}</Intro.Description>
-      <MintForm />
+      <MintForm setIsToast={setIsToast} />
     </StyledRoot>
   );
 }
