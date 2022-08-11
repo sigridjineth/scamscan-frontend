@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 
@@ -12,6 +12,8 @@ interface MintFormProps {
 
 function MintForm({ setIsToast }: MintFormProps) {
   const methods = useForm();
+  const [isPadding, setIsPadding] = useState<boolean>(false);
+  const [averageScore, setAverageScore] = useState<number>(0);
   // const { getValues } = useFormContext();
   const onSubmit = (data) => {
     const value = methods.getValues();
@@ -31,11 +33,19 @@ function MintForm({ setIsToast }: MintFormProps) {
     }, 4000);
   };
 
+  useEffect(() => {
+    console.log('>>isPadding>>', isPadding);
+  }, [isPadding]);
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <TxCheckInputGroup />
-        <PointSendInputGroup />
+        <TxCheckInputGroup
+          isPadding={isPadding}
+          setIsPadding={setIsPadding}
+          setAverageScore={setAverageScore}
+        />
+        <PointSendInputGroup averageScore={averageScore} />
 
         <Button type="submit">Send Reputation</Button>
       </form>

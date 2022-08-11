@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
+import { getMintContract } from '@src/lib/contract';
 import { body1Regular, body2Bold, body3Regular } from '@src/styles';
 import { checkTxValidation } from '@src/utils/checkTx';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import StatusChecker from '../StatusChecker';
@@ -15,12 +16,17 @@ interface Status {
   isPadding: boolean;
 }
 
-function TxCheckInputGroup() {
-  const [isPadding, setIsPadding] = useState(false);
+interface TxCheckInputGroupProps {
+  isPadding: boolean;
+  setIsPadding: Dispatch<SetStateAction<boolean>>;
+  setAverageScore: Dispatch<SetStateAction<number>>;
+}
+function TxCheckInputGroup({ isPadding, setIsPadding, setAverageScore }: TxCheckInputGroupProps) {
   const {
     register,
     setError,
     getValues,
+    setValue,
     formState: { errors },
   } = useFormContext<TxCheckFormInput>();
 
@@ -56,6 +62,19 @@ function TxCheckInputGroup() {
       type: 'manual',
       message: result['transactionId'],
     });
+
+    if (result.targetAddress === 'Success' && result.transactionId === 'Success') {
+      const mintContract = await getMintContract();
+
+      const allCount = await mintContract.balanceOf(values?.targetAddress);
+      const allScore = await mintContract.reputationScoreOf(values?.targetAddress);
+
+      if (allCount.toNumber() === 0) {
+        setAverageScore(0);
+      } else {
+        setAverageScore(allScore.toNumber() / allCount.toNumber());
+      }
+    }
   };
 
   return (

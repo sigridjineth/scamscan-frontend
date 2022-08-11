@@ -12,7 +12,11 @@ import {
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-function PointSendInputGroup() {
+interface PointSendInputGroupProps {
+  averageScore: number;
+}
+
+function PointSendInputGroup({ averageScore }: PointSendInputGroupProps) {
   const {
     register,
     setError,
@@ -21,11 +25,15 @@ function PointSendInputGroup() {
     formState: { errors },
   } = useFormContext();
 
+  const value = getValues();
+
+  console.log('>>value', value);
+
   return (
     <StRoot>
       <StAddress>0xa50...Ee9CB’s Score</StAddress>
-      <StScore>+41</StScore>
-      <ScoreBar score={+41} />
+      <StScore>{averageScore}</StScore>
+      <ScoreBar score={averageScore} />
       <StCheckBoxGroup>
         <label
           htmlFor="radio-1"
