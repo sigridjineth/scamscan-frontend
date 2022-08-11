@@ -54,3 +54,11 @@ export const h1Regular = `
   line-height: 48px;
   letter-spacing: 0em;
 `;
+
+export const h2Regular = `
+font-family: Syne;
+font-size: 34px;
+font-weight: 600;
+line-height: 41px;
+letter-spacing: 0em;
+`;

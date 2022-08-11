@@ -13,9 +13,10 @@ import LodingInputGroup from './LodingInputGroup';
 
 interface MintFormProps {
   setIsToast: Dispatch<SetStateAction<boolean>>;
+  setIsSubmit: Dispatch<SetStateAction<boolean>>;
 }
 
-function MintForm({ setIsToast }: MintFormProps) {
+function MintForm({ setIsToast, setIsSubmit }: MintFormProps) {
   const methods = useForm();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isCalculateLoading, setIsCalculateLoading] = useState<boolean>(false);
@@ -49,6 +50,7 @@ function MintForm({ setIsToast }: MintFormProps) {
   const onSubmit = (data) => {
     const value = methods.getValues();
     const allDataArray = Object.values(value);
+    let isEmpty = false;
 
     console.log('>>value', value);
     console.log('>>data', data);
@@ -57,11 +59,22 @@ function MintForm({ setIsToast }: MintFormProps) {
         setTimeout(() => {
           setIsToast(true);
         }, 100);
+        isEmpty = true;
       }
     });
     setTimeout(() => {
       setIsToast(false);
     }, 4000);
+
+    if (!isEmpty && typeof window !== undefined) {
+      setIsSubmit(true);
+      /* 로컬스토리지에 데이터 저장 */
+      localStorage.setItem('point', value.point);
+      localStorage.setItem('reason', value.reason);
+      localStorage.setItem('reputation', value.reputation);
+      localStorage.setItem('targetAddress', value.targetAddress);
+      localStorage.setItem('transactionId', value.transactionId);
+    }
   };
 
   useEffect(() => {

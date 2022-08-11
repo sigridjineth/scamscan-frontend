@@ -34,7 +34,8 @@ function PointSendInputGroup({
   } = useFormContext();
 
   const value = getValues();
-  const averageNumFromLocal = Number(localStorage.getItem('averageScore'));
+  const averageNumFromLocal =
+    typeof window !== 'undefined' && Number(localStorage.getItem('averageScore'));
 
   console.log('>>value', value);
 
