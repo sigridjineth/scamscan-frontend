@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import useThrottle from '@src/hooks/useThrottle';
+import { getBalance } from '@src/utils/getBalance';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
@@ -16,9 +18,34 @@ interface MintFormProps {
 function MintForm({ setIsToast }: MintFormProps) {
   const methods = useForm();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isCalculateLoading, setIsCalculateLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [averageScore, setAverageScore] = useState<number>(0);
+  const [burnedMatic, setBurnedMatic] = useState<number>(0);
+
+  const getBurnedMatic = async (point: number) => {
+    console.log('>>>point', point);
+    let currentPoint = Number(point);
+
+    if (!point) {
+      currentPoint = 0;
+    }
+    const result = await getBalance(currentPoint);
+
+    setBurnedMatic(result);
+  };
+  // const calculateBurnedMatice = useThrottle(getBurnedMatic, 2000);
+
   // const { getValues } = useFormContext();
+  useEffect(() => {
+    const subscription = methods.watch((point) => {
+      console.log('****', point?.point);
+      getBurnedMatic(Number(point?.point));
+    });
+
+    return () => subscription.unsubscribe();
+  }, [methods, methods.watch]);
+
   const onSubmit = (data) => {
     const value = methods.getValues();
     const allDataArray = Object.values(value);
@@ -39,7 +66,7 @@ function MintForm({ setIsToast }: MintFormProps) {
 
   useEffect(() => {
     console.log('>>isPadding>>', isLoading);
-  }, [isLoading]);
+  }, [methods.watch('point')]);
 
   const handleModalClick = () => {
     console.log('클릭');
@@ -60,6 +87,7 @@ function MintForm({ setIsToast }: MintFormProps) {
             averageScore={averageScore}
             isSuccess={isSuccess}
             setAverageScore={setAverageScore}
+            burnedMatic={burnedMatic}
           />
         )}
         {/* <StModalWrapper>

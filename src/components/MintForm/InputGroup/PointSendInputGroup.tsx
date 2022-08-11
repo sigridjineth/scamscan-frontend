@@ -16,12 +16,14 @@ interface PointSendInputGroupProps {
   averageScore: number;
   isSuccess: boolean;
   setAverageScore: Dispatch<SetStateAction<number>>;
+  burnedMatic: number;
 }
 
 function PointSendInputGroup({
   averageScore,
   isSuccess,
   setAverageScore,
+  burnedMatic,
 }: PointSendInputGroupProps) {
   const {
     register,
@@ -80,7 +82,7 @@ function PointSendInputGroup({
         />
       </label>
       <label htmlFor="mintCost">Mint Cost</label>
-      <div></div>
+      <StCost>{burnedMatic} Matic</StCost>
     </StRoot>
   );
 }
@@ -161,4 +163,9 @@ const StCheckBoxGroup = styled.div`
       background: transparent !important;
     }
   }
+`;
+
+const StCost = styled.div`
+  ${h1Regular}
+  margin-top: 12px;
 `;
