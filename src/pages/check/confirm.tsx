@@ -192,7 +192,9 @@ function Confirm() {
     const totalNumber = await contract.balanceOf(router?.query?.checkAddress);
 
     console.log('>>scoreData', result);
-    setScore(result?.toNumber() / totalNumber.toNumber());
+
+    if (totalNumber.toNumber() != 0) setScore(result?.toNumber() / totalNumber.toNumber());
+    else setScore(0);
   };
 
   useEffect(() => {
