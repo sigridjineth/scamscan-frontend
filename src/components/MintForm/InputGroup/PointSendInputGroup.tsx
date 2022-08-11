@@ -31,7 +31,7 @@ function PointSendInputGroup({ averageScore }: PointSendInputGroupProps) {
 
   return (
     <StRoot>
-      <StAddress>0xa50...Ee9CB’s Score</StAddress>
+      <StAddress>{value?.targetAddress}’s Score</StAddress>
       <StScore>{averageScore}</StScore>
       <ScoreBar score={averageScore} />
       <StCheckBoxGroup>
@@ -85,6 +85,16 @@ const StRoot = styled.section`
   border-radius: 20px;
   margin-top: 20px;
   padding: 48px 48px;
+  input[type='number'] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+    width: 348px;
+  }
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
   & input {
     background: #181818;
     border-radius: 10px;

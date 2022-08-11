@@ -5,6 +5,7 @@ import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import Button from '../common/Button';
 import PointSendInputGroup from './InputGroup/PointSendInputGroup';
 import TxCheckInputGroup from './InputGroup/TxCheckInputGroup';
+import LodingInputGroup from './LodingInputGroup';
 
 interface MintFormProps {
   setIsToast: Dispatch<SetStateAction<boolean>>;
@@ -12,7 +13,7 @@ interface MintFormProps {
 
 function MintForm({ setIsToast }: MintFormProps) {
   const methods = useForm();
-  const [isPadding, setIsPadding] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [averageScore, setAverageScore] = useState<number>(0);
   // const { getValues } = useFormContext();
   const onSubmit = (data) => {
@@ -34,18 +35,14 @@ function MintForm({ setIsToast }: MintFormProps) {
   };
 
   useEffect(() => {
-    console.log('>>isPadding>>', isPadding);
-  }, [isPadding]);
+    console.log('>>isPadding>>', isLoading);
+  }, [isLoading]);
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <TxCheckInputGroup
-          isPadding={isPadding}
-          setIsPadding={setIsPadding}
-          setAverageScore={setAverageScore}
-        />
-        <PointSendInputGroup averageScore={averageScore} />
+        <TxCheckInputGroup setIsLoading={setIsLoading} setAverageScore={setAverageScore} />
+        {isLoading ? <LodingInputGroup /> : <PointSendInputGroup averageScore={averageScore} />}
 
         <Button type="submit">Send Reputation</Button>
       </form>

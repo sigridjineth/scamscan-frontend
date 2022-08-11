@@ -17,11 +17,10 @@ interface Status {
 }
 
 interface TxCheckInputGroupProps {
-  isPadding: boolean;
-  setIsPadding: Dispatch<SetStateAction<boolean>>;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
   setAverageScore: Dispatch<SetStateAction<number>>;
 }
-function TxCheckInputGroup({ isPadding, setIsPadding, setAverageScore }: TxCheckInputGroupProps) {
+function TxCheckInputGroup({ setIsLoading, setAverageScore }: TxCheckInputGroupProps) {
   const {
     register,
     setError,
@@ -29,12 +28,14 @@ function TxCheckInputGroup({ isPadding, setIsPadding, setAverageScore }: TxCheck
     setValue,
     formState: { errors },
   } = useFormContext<TxCheckFormInput>();
+  const [isPadding, setIsPadding] = useState<boolean>(false);
 
   const targetAddress = register('targetAddress');
   const transactionId = register('transactionId');
 
   const handleClick = async () => {
     setIsPadding(true);
+    setIsLoading(true);
     setError('targetAddress', {
       type: 'manual',
       message: 'Loading',
@@ -62,6 +63,9 @@ function TxCheckInputGroup({ isPadding, setIsPadding, setAverageScore }: TxCheck
       type: 'manual',
       message: result['transactionId'],
     });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 100);
 
     if (result.targetAddress === 'Success' && result.transactionId === 'Success') {
       const mintContract = await getMintContract();
